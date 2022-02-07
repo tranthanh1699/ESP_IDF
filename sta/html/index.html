@@ -1,0 +1,119 @@
+<!DOCTYPE HTML><html>
+<head>
+  <title>HIHI DASHBOARD</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <link rel="icon" href="data:,">
+  <style>
+    html {font-family: Arial; display: inline-block; text-align: center;}
+    h1 {  font-size: 2rem;}
+    body {  margin: 0;}
+    .topnav { overflow: hidden; background-color: #2f4468; color: white; font-size: 1.7rem; }
+    .content { padding: 20px; }
+    .card { background-color: white; box-shadow: 2px 2px 12px 1px rgba(140,140,140,.5); }
+    .cards { max-width: 700px; margin: 0 auto; display: grid; grid-gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+    .reading { font-size: 2.8rem; }
+    .timestamp { color: #bebebe; font-size: 1rem; }
+    .card-title{ font-size: 1.2rem; font-weight : bold; }
+    .card.temperature { color: #B10F2E; }
+    .card.humidity { color: #50B8B4; }
+    .toggle {
+    margin:0 0 0 2rem;
+    position: relative;
+    display: inline-block;
+    width: 6rem;
+    height: 3.4rem;
+    }
+
+    .toggle input {
+        display: none;
+    }
+
+    .roundbutton {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        background-color: #33455e;
+        display: block;
+        transition: all 0.3s;
+        border-radius: 3.4rem;
+        cursor: pointer;
+    }
+
+    .roundbutton:before {
+        position: absolute;
+        content: "";
+        height: 2.4rem;
+        width: 2.5rem;
+        border-radius: 100%;
+        display: block;
+        left: 0.5rem;
+        bottom: 0.5rem;
+        background-color: white;
+        transition: all 0.3s;
+    }
+
+    input:checked + .roundbutton {
+        background-color: #FF6E48;
+    }
+
+    input:checked + .roundbutton:before  {
+        transform: translate(2.6rem, 0);
+    }
+  </style>
+</head>
+<body>
+  <div class="topnav">
+    <h1>HIHI DASHBOARD</h1>
+  </div>
+  <div class="content">
+    <div class="cards">
+      <div class="card temperature">
+        <p class="card-title"><i class="fas fa-thermometer-half"></i> BOARD #1 - TEMPERATURE</p><p><span class="reading"><span id="t1"></span> &deg;C</span></p><p class="timestamp">Last Reading: <span id="rt1"></span></p>
+      </div>
+      <div class="card humidity">
+        <p class="card-title"><i class="fas fa-tint"></i> BOARD #1 - HUMIDITY</p><p><span class="reading"><span id="h1"></span> &percnt;</span></p><p class="timestamp">Last Reading: <span id="rh1"></span></p>
+      </div>
+    </div>
+  </div>
+  <div class="content">
+    <label class="toggle">
+      <input id="toggleswitch" type="checkbox">
+      <span class="roundbutton"></span>
+    </label>     
+  </div>
+<script>
+    var xhttp = new XMLHttpRequest(); 
+    xhttp.onreadystatechange = function()
+    {
+        console.log(this.responseText); 
+        const obj = JSON.parse(this.responseText); 
+        var element1 = document.getElementById("t1"); 
+        element1.innerText = obj.temp; 
+        var element1 = document.getElementById("h1"); 
+        element1.innerText = obj.humi; 
+
+    }
+    setInterval(function () {
+        xhttp.open("GET", "/dht11", true); 
+        xhttp.send(); 
+    }, 1000);
+
+    var input = document.getElementById('toggleswitch');
+    var outputtext = document.getElementById('status');
+    var xhihi = new XMLHttpRequest(); 
+    input.addEventListener('change',function(){
+        if(this.checked) {
+          xhihi.open("POST", "/led", true); 
+          xhihi.send("1"); 
+        } else {
+          xhihi.open("POST", "/led", true); 
+          xhihi.send("0"); 
+        }
+    });
+</script>
+</body>
+</html>

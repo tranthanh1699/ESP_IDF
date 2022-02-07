@@ -1,0 +1,29 @@
+{
+    "files.associations": {
+        "codecvt": "c",
+        "condition_variable": "c",
+        "cstddef": "c",
+        "list": "c",
+        "string": "c",
+        "optional": "c",
+        "future": "c",
+        "limits": "c",
+        "memory": "c",
+        "new": "c",
+        "functional": "c",
+        "type_traits": "c",
+        "*.ipp": "c",
+        "*.inc": "c",
+        "output_iot.h": "c",
+        "gpio_types.h": "c",
+        "uart.h": "c",
+        "esp_err.h": "c",
+        "input.h": "c",
+        "esp_system.h": "c",
+        "esp32_wifi.h": "c",
+        "output.h": "c",
+        "freertos.h": "c",
+        "esp32_uart.h": "c",
+        "ringbuff.h": "c"
+    }
+}
